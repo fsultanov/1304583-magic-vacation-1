@@ -2,7 +2,7 @@ $animation-duration: 0.4s;
 
 @mixin menu-line-animation {
   left: 0%;
-  animation: $animation-duration ease-out menu-hover;
+  animation: menu-hover $animation-duration ease-out;
 }
 
 @keyframes menu-hover {

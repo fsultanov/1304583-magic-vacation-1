@@ -1,3 +1,22 @@
+@keyframes fade-in {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@mixin items-animation-delay($count) {
+  @for $i from 0 through $count {
+    &:nth-child(#{$i + 1}) {
+      animation-delay: #{$i * 0.1}s;
+    }
+  }
+}
+
 .social-block {
   position: relative;
 
@@ -35,6 +54,7 @@
     background-color: $c-light;
     border: 2px solid $c-light;
     z-index: -1;
+    transition: width 0.2s ease-in, height 0.2s ease-in;
   }
 
   svg {
@@ -44,27 +64,30 @@
     height: 2.2rem;
   }
 
-  &:hover,
-  .social-block--active & {
-    color: $c-purple;
-
+  &:hover {
     &::before {
       width: 112.5%;
       height: 112.5%;
+      border-color: $c-light;
     }
   }
 
   &:focus {
-    color: $c-purple;
+    color: $c-light;
     outline: none;
 
     &::before {
       border-color: $c-purple;
+      background-color: $c-purple;
     }
 
     & + .social-block__list {
       opacity: 1;
       pointer-events: auto;
+      li {
+        animation: none;
+        opacity: 1;
+      }
     }
   }
 
@@ -140,6 +163,11 @@
   .social-block--active & {
     opacity: 1;
     pointer-events: auto;
+    li {
+      opacity: 0;
+      animation: fade-in $animation-duration forwards ease-out;
+      @include items-animation-delay(3);
+    }
   }
 
   li {
@@ -186,6 +214,7 @@
 
   &:hover {
     color: $c-purple;
+    transition: color 0.5s ease;
   }
 
   &:focus {
